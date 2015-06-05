@@ -1,0 +1,39 @@
+#map {
+	position:absolute;
+	top:0; 
+	bottom:0; 
+	left: 0px;
+	width:100%;
+	}
+	
+	#countLeft {
+    position: absolute;
+    left: 0px;
+    width: 100px;
+		opacity:0.6;
+    top: 0px;
+    bottom: 0px;
+    color: #fff;
+    padding: 64px;
+    background: #000;
+}
+
+	#Plants{
+    position: absolute;
+		top: -66px; 
+    left: 0px;
+		opacity: 0.8;
+    font: 12px "Helvetica Neue", Arial, Helvetica, sans-serif; 
+    color: #ffffff;
+    padding: 58px;
+}
+
+	#Key{
+    position: absolute;
+		background-position: right bottom;
+		background-repeat: no-repeat;
+		bottom: 6%; 
+    left: 0px;
+
+    padding: 8px;
+}

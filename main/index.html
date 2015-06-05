@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Specimen Climate Distribution Map</title>
+	
+	<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
+	<link rel='stylesheet' type='text/css' href='style.css'/>
+	<!--[if lte IE 8]>
+  <link href='style.css' type='text/css' rel='stylesheet' >
+  <![endif]-->
+	
+	<script src='http://api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.js'></script>
+	<script src='../cluster/dist/leaflet.markercluster-src.js'></script>
+
+	
+	<link rel='stylesheet' type="text/css" href='../cluster/style/MarkerCluster.css' />
+	<link rel='stylesheet' type="text/css" href='../cluster/style/MarkerCluster.Default.css' />
+	<!--[if lte IE 8]><link rel="stylesheet" href="../style/MarkerCluster.Default.ie.css" /><![endif]-->
+	
+	<!--Data from GBIF-->
+	<script src='../cluster/dist/Newbam1.js'></script> 
+	<script src='../cluster/dist/Oldbam1.js'></script> 
+</head>
+<body>
+	<div id='map'></div>
+	<div id='countLeft'></div>
+	<div id='Plants'> <h1> Specimen <br/> Distribution of <br/> Climate data</h1></div>
+	<div id='Key'><img src='../cluster/images/Key2.png' alt="Large"></div>
+
+	
+	
+	<script type='text/javascript'>
+		latlng = L.latLng(2.608728, 17.323860);
+		var map = L.mapbox.map('map', 'map', {center: latlng, zoom: 2, maxZoom: 15, minZoom: 0, zoomControl: true }).addControl(L.mapbox.geocoderControl('franzone899.map-otc93ncv'));
+		L.control.scale().addTo(map);
+		 
+		
+	  var LeafIcon1 = L.Icon.extend({
+		  options: {
+		  shadowUrl: '../cluster/images/Outline_leaf.png',
+	  	iconSize:     [45, 55],
+		  shadowSize:   [50, 63],
+	  	iconAnchor:   [10, 60],
+	    shadowAnchor: [4, 62],
+		  popupAnchor:  [-3, -76]
+		  }
+		});
+
+	  var LeafIcon = L.Icon.extend({
+		  options: {
+		  shadowUrl: '../cluster/images/Outline_station.png',
+	  	iconSize:     [45, 55],
+		  shadowSize:   [46, 57],
+	  	iconAnchor:   [10, 60],
+	    shadowAnchor: [7, 57],
+		  popupAnchor:  [-2, -70]
+		  }
+		});
+		
+		var greenIcon = new LeafIcon({iconUrl: '../cluster/images/station.png'})
+		var yellowIcon = new LeafIcon1({iconUrl: '../cluster/images/Pink_leaf.png'})
+		
+		
+	  L.control.layers({
+      'Satellite': L.mapbox.tileLayer('franzone899.map-ko7vle89').addTo(map),
+      'Terrain': L.mapbox.tileLayer('franzone899.map-ir8ykz82')}, 
+		  {
+		  'Richness': L.mapbox.tileLayer('franzone899.Bamboo'),
+		'WWF Biomes': L.mapbox.tileLayer('franzone899.WWF_biomes')
+}).addTo(map);
+
+		var markers = L.markerClusterGroup();
+		
+		var markerList = [];
+		
+		<!--loops thought all the New World data points-->
+		for (var i = 0; i < Newworld.length; i++) {
+			var a = Newworld[i];
+			var title = a[2];
+			var marker = L.marker(L.latLng(a[0], a[1]), {icon: yellowIcon});
+			marker.bindPopup(title);
+			markers.addLayer(marker);
+		}
+		
+		for (var i = 0; i < Oldworld.length; i++) {
+			var a = Oldworld[i];
+			var title = a[2];
+			var marker = L.marker(L.latLng(a[0], a[1]), {icon: greenIcon});
+			marker.bindPopup(title);
+			markers.addLayer(marker);
+		}
+
+		markers.addLayers(markerList);
+		map.addLayer(markers);	
+	</script>
+	<script src='../cluster/dist/legend.js'></script>
+</body>
+</html>
